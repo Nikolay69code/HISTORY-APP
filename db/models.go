@@ -2,6 +2,7 @@ package db
 
 import "time"
 
+// User представляет пользователя в системе
 type User struct {
 	ID         int64     `json:"id"`
 	TelegramID int64     `json:"telegram_id"`
@@ -18,6 +19,7 @@ type Topic struct {
 	OrderNum    int    `json:"order_num"`
 }
 
+// Task представляет задание
 type Task struct {
 	ID          int      `json:"id"`
 	TopicID     int      `json:"topic_id"`
@@ -27,12 +29,14 @@ type Task struct {
 	Options     []Option `json:"options"`
 }
 
+// Option представляет вариант ответа
 type Option struct {
 	ID        int    `json:"id"`
 	Text      string `json:"text"`
 	IsCorrect bool   `json:"is_correct"`
 }
 
+// TheoryMaterial представляет теоретический материал
 type TheoryMaterial struct {
 	ID       int    `json:"id"`
 	TopicID  int    `json:"topic_id"`
@@ -50,10 +54,9 @@ type UserProgress struct {
 	LastAttemptAt time.Time `json:"last_attempt_at"`
 }
 
+// Statistics представляет статистику пользователя
 type Statistics struct {
-	UserID          int64     `json:"user_id"`
-	TopicID         int       `json:"topic_id"`
-	TotalAttempts   int       `json:"total_attempts"`
-	CorrectAttempts int       `json:"correct_attempts"`
-	LastUpdatedAt   time.Time `json:"last_updated_at"`
+	TopicID         int `json:"topic_id"`
+	TotalAttempts   int `json:"total_attempts"`
+	CorrectAttempts int `json:"correct_attempts"`
 }

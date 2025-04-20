@@ -152,3 +152,36 @@ func GetUserStatistics(userID int64) ([]Statistics, error) {
 	}
 	return stats, nil
 }
+
+// GetTheoryMaterialsByTopic получает теоретические материалы по теме
+func GetTheoryMaterialsByTopic(topicID int) ([]TheoryMaterial, error) {
+	rows, err := DB.Query(`
+		SELECT id, title, content, order_num
+		FROM theory_materials
+		WHERE topic_id = $1
+		ORDER BY order_num
+	`, topicID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var materials []TheoryMaterial
+	for rows.Next() {
+		var material TheoryMaterial
+		err := rows.Scan(&material.ID, &material.Title, &material.Content, &material.OrderNum)
+		if err != nil {
+			return nil, err
+		}
+		materials = append(materials, material)
+	}
+	return materials, nil
+}
+
+// Структура для теоретических материалов
+type TheoryMaterial struct {
+	ID       int    `json:"id"`
+	Title    string `json:"title"`
+	Content  string `json:"content"`
+	OrderNum int    `json:"order_num"`
+}
