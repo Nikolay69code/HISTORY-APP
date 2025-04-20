@@ -104,6 +104,7 @@ func getTasks(c *gin.Context) {
 		return
 	}
 
+	// Преобразуем строку в число
 	topicID, err := strconv.Atoi(topicIDStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid topic ID format"})
