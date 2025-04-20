@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"history-ege-app/db"
 	"history-ege-app/telegram"
@@ -97,9 +98,15 @@ func main() {
 }
 
 func getTasks(c *gin.Context) {
-	topicID := c.Query("topic_id")
-	if topicID == "" {
+	topicIDStr := c.Query("topic_id")
+	if topicIDStr == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Topic ID is required"})
+		return
+	}
+
+	topicID, err := strconv.Atoi(topicIDStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid topic ID format"})
 		return
 	}
 
@@ -155,9 +162,15 @@ func getStatistics(c *gin.Context) {
 }
 
 func getTheoryMaterials(c *gin.Context) {
-	topicID := c.Query("topic_id")
-	if topicID == "" {
+	topicIDStr := c.Query("topic_id")
+	if topicIDStr == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Topic ID is required"})
+		return
+	}
+
+	topicID, err := strconv.Atoi(topicIDStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid topic ID format"})
 		return
 	}
 
